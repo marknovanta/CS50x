@@ -1,0 +1,2 @@
+Probably it calculates the aura based on energy and danceability of each song
+I would rank the songs, based on the same parameters, and then dividing the list into ranges to determine each color for the aura
