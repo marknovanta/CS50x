@@ -1,0 +1,27 @@
+.centered {
+    text-align: center;
+    padding: 21px;
+    margin: 21px;
+}
+
+.card {
+    margin: 12px;
+}
+
+.padding {
+    padding: 21px;
+}
+
+input[type='number']{
+    max-width: 600px;
+}
+
+.margin-space {
+    margin: 5px;
+}
+
+td.fitwidth {
+    width: 1px;
+    white-space: nowrap;
+}
+

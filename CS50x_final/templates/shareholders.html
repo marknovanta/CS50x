@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shareholders
+{% endblock %}
+
+{% block main %}
+
+    <div class="d-md-flex justify-content-center">
+        <button type="button" class="btn btn-primary margin-space" data-bs-toggle="modal" data-bs-target="#addShareholder" data-bs-whatever="@mdo">Add Shareholder</button>
+        <button type="button" class="btn btn-success margin-space" data-bs-toggle="modal" data-bs-target="#addCash" data-bs-whatever="@mdo">Deposit Cash</button>
+        <button type="button" class="btn btn-danger margin-space" data-bs-toggle="modal" data-bs-target="#subCash" data-bs-whatever="@mdo">Withdraw Cash</button>
+    </div>
+
+    <div class="modal fade" id="addShareholder" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Shareholder</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/shareholders" method="post">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Name:</label>
+                            <input type="text" autocomplete="off" class="form-control" id="recipient-name" name="name" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="addCash" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Deposit Cash</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/cash" method="post">
+                        <div class="mb-3">
+                            <input class="form-control" autocomplete="off" type="number" step="0.01" name="added_cash" placeholder="Amount">
+                        </div>
+                        <select class="form-select" name="shareholder" id="shareholder" type="text">
+                            <option selected="true" disabled="disabled">Select a shareholder</option>
+                            {% for s in shareholders %}
+                                <option value="{{ s['name'] }}">{{ s["name"] }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="d-md-flex justify-content-center padding">
+                            <button class="btn btn-primary" type="submit">DEPOSIT</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="subCash" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Withdraw Cash</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/subCash" method="post">
+                        <div class="mb-3">
+                            <input class="form-control" autocomplete="off" type="number" step="0.01" name="added_cash" placeholder="Amount">
+                        </div>
+                        <select id="shSelector" class="form-select" name="shareholder" type="text">
+                            <option selected="true" disabled="disabled">Select a shareholder</option>
+                            {% for s in shareholders %}
+                                <option value="{{ s['name'] }}">{{ s["name"] }}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="d-md-flex justify-content-center padding">
+                            <button class="btn btn-primary" type="submit">WITHDRAW</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Shareholder</th>
+                    <th scope="col">Share</th>
+                    <th scope="col">Ownership</th>
+                    <th>Income/y</th>
+                    <th>Available to withdraw</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in shareholders %}
+                    <tr>
+                        <td>{{ s["name"] }}</td>
+                        <td>{{ s["share"] | usd }}</td>
+                        {% if capital == 0 %}
+                            {% set perc = 0 %}
+                            <td>0%</td>
+                        {% else %}
+                            {% set perc = s["share"] / capital %}
+                            <td>{{ (perc * 100) | round(1, 'floor') }}%</td>
+                        {% endif %}
+                        {% set yi = yearly_income * perc %}
+                        <td>{{ yi | usd }}</td>
+                        {% set outer_loop = loop %}
+                        <td>{{ av_cash[outer_loop.index] | usd }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary margin-space" data-bs-toggle="modal" data-bs-target="#edit{{ s['id'] }}" data-bs-whatever="@mdo">Edit</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">TOTAL Cash</th>
+                    <th colspan="1">{{ cash | usd }}</th>
+                </tr>
+                <tr>
+                    <th scope="row" class="table-warning">TOTAL CAPITAL</th>
+                    <th colspan="1" class="table-warning">{{ capital | usd }}</th>
+                </tr>
+            </tfoot>
+        </table>
+        {% for s in shareholders%}
+            <div class="modal fade" id="edit{{ s['id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Shareholder</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/edit_shareholders" method="post">
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">New name:</label>
+                                    <input type="hidden" name="id" value="{{ s['id'] }}">
+                                    <input type="text" autocomplete="off" class="form-control" id="recipient-name" name="name" required placeholder="{{ s['name'] }}">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

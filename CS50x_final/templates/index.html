@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+    <h1 class="centered">Portfolio Overview</h1>
+
+    <div class="d-md-flex justify-content-center">
+        <button type="button" class="btn btn-success margin-space" data-bs-toggle="modal" data-bs-target="#newTransactionLIVE" data-bs-whatever="@mdo">Buy stock</button>
+    </div>
+
+    <hr>
+
+    <div class="modal fade" id="newTransactionLIVE" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">New Transaction</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/buy" method="post">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Stock:</label>
+                            <input type="text" autocomplete="off" class="form-control" id="stockWatching" name="symbol" required placeholder="Ticker">
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" autocomplete="off" id="sizeBuy" type="number" name="shares" placeholder="Amount">
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" autocomplete="off" id="priceBuy" type="number" step="0.01" name="price" placeholder="Price">
+                        </div>
+                        <div class="mb-3 d-md-flex justify-content-center">
+                            <p id="priceTag"></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">BUY</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <!-- <th>Name</th> -->
+                    <th>Symbol</th>
+                    <th>Current price</th>
+                    <th>Size</th>
+                    <th>Market Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in stocks%}
+                    <tr>
+                        <!-- <td>{{ s["company"] }}</td> -->
+                        <td>{{ s["stock"] }}</td>
+                        <td>{{ s["price"] | usd }}</td>
+                        <td>{{ s["size"] }}</td>
+                        <td>{{ s["value"] | usd }}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger margin-space" data-bs-toggle="modal" data-bs-target="#sell{{ s['id'] }}" data-bs-whatever="@mdo">Sell</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Cash</th>
+                    <th colspan="2">{{ cash | usd }}</th>
+                </tr>
+                <tr>
+                    <th class="table-warning">Portfolio Value</th>
+                    <th colspan="1" class="table-warning">{{ portfolio_value | usd }}</th>
+                    <th colspan="1" class="table-warning">{{ perc_change | round(3) }}%</th>
+                </tr>
+            </tfoot>
+        </table>
+
+
+        {% for s in stocks%}
+            <div class="modal fade" id="sell{{ s['id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Sell Stock</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/sell" method="post">
+                                <div class="mb-3">
+                                    <label for="recipient-name" class="col-form-label">Sell - {{ s["stock"] }}</label>
+                                    <input type="hidden" name="id" value="{{ s['id'] }}">
+                                    <input type="hidden" name="symbol" value="{{ s['stock'] }}">
+                                    <input class="form-control" autocomplete="off" type="number" name="shares" placeholder="Amount">
+                                </div>
+                                <div class="mb-3">
+                                    <input class="form-control" autocomplete="off" type="number" step="0.01" name="price" placeholder="Price">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-danger">SELL</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

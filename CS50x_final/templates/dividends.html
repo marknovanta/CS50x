@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dividends
+{% endblock %}
+
+{% block main %}
+
+    <h1 class="centered">Dividends</h1>
+    <form action="/upd_div_db" method="post">
+        <div class="d-md-flex justify-content-center">
+            <button type="submit" class="btn btn-primary margin-space">Update database</button>
+        </div>
+    </form>
+    <hr>
+
+    <div class="container table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <!-- <th>Name</th> -->
+                    <th>Symbol</th>
+                    <th>JAN</th>
+                    <th>FEB</th>
+                    <th>MAR</th>
+                    <th>APR</th>
+                    <th>MAY</th>
+                    <th>JUN</th>
+                    <th>JUL</th>
+                    <th>AUG</th>
+                    <th>SEP</th>
+                    <th>OCT</th>
+                    <th>NOV</th>
+                    <th>DEC</th>
+                    <th class="table-warning">TOT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in info%}
+                    <tr>
+                        <!-- <td>{{ s["company"] }}</td> -->
+                        <td>{{ s["symbol"] }}</td>
+                        <td>
+                            {% if 1 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 2 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 3 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 4 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 5 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 6 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 7 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 8 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 9 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 10 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 11 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if 12 in s['payment_months'] %}
+                                {{ s['amount'] | usd }}
+                            {% endif %}
+                        </td>
+                        <td class="table-warning">
+                            {{ s['yearly_income'] | usd }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th class="table-primary">TOT mo</th>
+                    <td class="table-primary">{{ monthly_income["GEN"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["FEB"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["MAR"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["APR"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["MAY"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["JUN"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["JUL"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["AUG"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["SEP"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["OCT"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["NOV"] | usd }}</td>
+                    <td class="table-primary">{{ monthly_income["DEC"] | usd }}</td>
+                    <td class="table-primary"></td>
+                </tr>
+                <tr>
+                    <th class="table-warning" colspan="2">TOT year</th>
+                    <th class="table-warning">{{ yearly_income | usd }}</th>
+                </tr>
+                <tr>
+                    <th class="table-warning" colspan="2">AVG per month</th>
+                    <th class="table-warning">{{ avg_income | usd }}</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+{% endblock %}

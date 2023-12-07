@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Deposit and withdraws
+{% endblock %}
+
+{% block main %}
+
+    <h1 class="centered">Shareholders Activity</h1>
+    <hr>
+
+    <div class="container">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Shareholder</th>
+                    <th>Action</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in activity %}
+                    <tr>
+                        <td>{{ a["date"] }}</td>
+                        <td>{{ a["name"] }}</td>
+                        {% if a["action"] == "DEPOSIT" %}
+                            <td class="table-success">{{ a["action"] }}</td>
+                        {% else %}
+                            <td class="table-danger">{{ a["action"] }}</td>
+                        {% endif %}
+                        <td>{{ a["amount"] | usd }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

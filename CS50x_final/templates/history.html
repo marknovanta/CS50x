@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+    <h1 class="centered">Portfolio Activity</h1>
+    <hr>
+
+    <div class="container">
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Stock</th>
+                    <th>Action</th>
+                    <th>Size</th>
+                    <th>Cost per share</th>
+                    <th>Total cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in history %}
+                    <tr>
+                        <td>{{ a["date"] }}</td>
+                        <td>{{ a["stock"] }}</td>
+                        {% if a["action"] == "BUY" %}
+                            <td class="table-success">{{ a["action"] }}</td>
+                        {% else %}
+                            <td class="table-danger">{{ a["action"] }}</td>
+                        {% endif %}
+                        <td>{{ a["size"] }}</td>
+                        <td>{{ a["cost_per_share"] | usd }}</td>
+                        <td>{{ a["cost"] | usd }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
