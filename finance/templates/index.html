@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+
+    <table>
+        <thead class="bordered">
+            <tr>
+                <th>Stock</th>
+                <th>Shares</th>
+                <th>Current Price</th>
+                <th>Market Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock["stock"] }}</td>
+                    <td>{{ stock["size"] }}</td>
+                    <td>{{ stock["price"] }}</td>
+                    <td>{{ stock["value"] }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>Cash</th>
+                <td>{{ cash }}</td>
+            </tr>
+            <tr>
+                <th>TOTAL</th>
+                <td>{{ portfolio_value }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+{% endblock %}

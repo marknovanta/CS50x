@@ -1,0 +1,71 @@
+.centered {
+    text-align: center;
+}
+
+header {
+    padding-top: 21px;
+    background-color: #FFAA00;
+}
+
+main {
+    padding: 21px;
+}
+
+img {
+    border: 5px solid black;
+    width: 100%;
+}
+
+footer {
+    padding: 21px;
+    background-color: #FFE3AA;
+}
+
+.txt_align_left {
+    text-align: left;
+}
+
+.column {
+    float: left;
+    width: 50%;
+    padding: 21px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#hello_button {
+    padding: 50px;
+}
+
+.mission {
+    text-align: justify;
+}
+
+.important {
+    font-size: large;
+    font-weight: bold;
+}
+
+#hype {
+    width: 90%;
+    padding: 21px;
+    margin: 21px;
+    font-weight: bold;
+    font-size: large;
+    background-color: orange;
+}
+
+#quote {
+    width: 100%;
+    max-width: 600px;
+}
+
+.center_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

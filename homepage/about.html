@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <script src="scripts.js"></script>
+        <title>About me</title>
+    </head>
+    <body>
+        <header>
+            <h1 class="centered">WELCOME TO MY HOMEPAGE</h1>
+            <p class="centered">This is a demo page for the problem Set8 in CS50</p>
+
+            <nav class="navbar navbar-expand-lg bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="#">Navbar</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                      <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="about.html">About me</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="mission.html">Mission</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Harvard pictures</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+        </header>
+        <main>
+            <div class="centered row center_container">
+                <div id="descriptions">
+                    <h2>Marknovanta</h2>
+                    <p>I'm an Italian guy who is studying coding</p>
+                </div>
+                <div class="column txt_align_left">
+                    <div>
+                        <p>My hobbies, including coding, are:</p>
+                        <ul>
+                            <li class="lic">Coding</li>
+                            <li class="lic">Investing</li>
+                            <li class="lic">Watch movies</li>
+                            <li class="lic">Play videogames</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p>My favorite coding languages are:</p>
+                        <ul>
+                            <li>Python</li>
+                            <li>SQL</li>
+                            <li>HTML</li>
+                            <li>CSS</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="column">
+                    <button id="hello_button" onclick="greets()">Say HELLO!</button>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="centered">
+                <h6>Copyright &#169; marknovanta 2023</h6>
+            </div>
+        </footer>
+    </body>
+</html>
